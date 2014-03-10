@@ -9,7 +9,6 @@ def main_menu
   puts "* m - modify a list                    *"
   puts "* x - exit                             *"
   puts "****************************************"
-
   main_choice = gets.chomp
   if main_choice == 'n'
     new_list
@@ -46,6 +45,7 @@ def main_menu_task(list)
   puts "* a - new task                         *"
   puts "* d - delete task                      *"
   puts "* l - list all tasks                   *"
+  puts "* m - modify task                      *"
   puts "* r - return to main menu              *"
   puts "* x - exit                             *"
   puts "****************************************"
@@ -55,34 +55,64 @@ def main_menu_task(list)
   elsif main_choice == 'd'
     delete_task(@list_to_modify)
   elsif main_choice =='l'
-    @list_to_modify.tasks_list
+    list_task(@list_to_modify)
     main_menu_task(@list_to_modify)
+  elsif main_choice == 'm'
+    modify_task(@list_to_modify)
   elsif main_choice == 'r'
     main_menu
   elsif main_choice == 'x'
     puts "Goodbye!!!!!"
   else
     puts "NOT A VALID ENTRY, Please follow the directions"
-    main_menu_task
+    main_menu_task(@list_to_modify)
   end
 end
 
 def add_task(list)
   puts "enter the task description"
   user_description = gets.chomp
-  @list_to_modify.add_task(user_description)
+  puts "what is the priority of your task 1-5"
+  @user_priority = gets.chomp.to_i
+  @list_to_modify.add_task(user_description, @user_priority)
   puts "Task added. \n\n"
   main_menu_task(@list_to_modify)
 end
 
 def delete_task(list)
-  @lists[@list_to_modify].tasks_list
+  @list_to_modify.tasks_list
   puts "enter a task number to delete"
   user_input = gets.chomp.to_i
-  @lists[@list_to_modify].remove(user_input-1)
+  @list_to_modify.remove(user_input-1)
   puts "\n\n\n\n\n\n*************UPDATED LIST***************"
-  @lists[@list_to_modify].tasks_list
+  @list_to_modify.tasks_list
   main_menu_task(@list_to_modify)
 end
 
+def list_task(list)
+  @list_to_modify.tasks_list
+  puts "Press 'd' to organize by date and 'p' to organize by priority"
+  organize_by = gets.chomp
+  if organize_by == 'd'
+    puts "haha just kidding"
+  elsif organize_by == 'p'
+    @list_to_modify.sort_by_priority
+    @list_to_modify.tasks_list
+  else
+    puts "YOU FAIL"
+    list_task(@list_to_modify)
+  end
+
+end
 main_menu
+
+
+
+
+
+
+
+
+
+
+

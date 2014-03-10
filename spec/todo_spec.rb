@@ -11,6 +11,10 @@ describe Task do
     new_task = Task.new("eat some more cake")
     new_task.description.should eq "eat some more cake"
   end
+  it "adds a priority to the task" do
+    new_task = Task.new("eat some more cake")
+    new_task.priority(3).should eq 3
+  end
 end
 
 describe List do
@@ -24,4 +28,5 @@ describe List do
     new_list.add_task("Wash the dishes")
     new_list.tasks_list[0].description.should eq "Wash the dishes"
   end
+
 end
