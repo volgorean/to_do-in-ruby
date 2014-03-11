@@ -40,7 +40,9 @@ def new_list
 end
 
 def main_menu_task(list)
-  puts "\n\n\n\n\n\n\n  Commands  "
+  system('clear')
+  @list_to_modify.tasks_list
+  puts "\n             Commands  "
   puts "****************************************"
   puts "* a - new task                         *"
   puts "* d - delete task                      *"
@@ -74,7 +76,9 @@ def add_task(list)
   user_description = gets.chomp
   puts "what is the priority of your task 1-5"
   @user_priority = gets.chomp.to_i
-  @list_to_modify.add_task(user_description, @user_priority)
+  puts "what is the due date (YYYYMMDD)"
+  @user_date = gets.chomp.to_i
+  @list_to_modify.add_task(user_description, @user_priority, @user_date)
   puts "Task added. \n\n"
   main_menu_task(@list_to_modify)
 end
@@ -91,16 +95,23 @@ end
 
 def list_task(list)
   @list_to_modify.tasks_list
-  puts "Press 'd' to organize by date and 'p' to organize by priority"
+  puts "Press 'd' to organize by date, 'p' to organize by priority or 'x' to exit
+  to the prior menu"
   organize_by = gets.chomp
   if organize_by == 'd'
-    puts "haha just kidding"
+    @list_to_modify.sort_by_date
+    system("clear")
+    @list_to_modify.tasks_list
   elsif organize_by == 'p'
     @list_to_modify.sort_by_priority
+    system("clear")
     @list_to_modify.tasks_list
+  elsif organize_by == 'x'
+    main_menu_task(@list_to_modify)
   else
     puts "YOU FAIL"
     list_task(@list_to_modify)
+
   end
 
 end
